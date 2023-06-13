@@ -1,16 +1,26 @@
-const Product = require('../models/Product.js')
+const Product = require('../models/Product.js');
+const mongoose = require('mongoose');
 
 
 // Get All Products
 const getProducts = (req, res) => {
-     Product.find({})/* .select('name description -_id') */
+     Product.find({})
      .then(products => res.json(products))
      .catch(() => res.sendStatus(500));
 }
 
 // Get All Active Products
 const getActiveProducts = (req, res) => {
-     Product.find({isActive: true})
+     let filter = {isActive: true};
+
+     if(req.query.categories){
+          filter = {
+               isActive: true,
+               category: req.query.categories.split(',')
+          }
+     }
+
+     Product.find(filter)
      .then(activeProducts => res.json(activeProducts))
      .catch(() => res.sendStatus(500));
 }
@@ -55,18 +65,19 @@ const deleteProduct = (req, res) => {
 
 // Update Product
 const updateProduct = (req, res) => {
-    const updatedProduct = {
+
+    const product = {
       name: req.body.name,
       description: req.body.description,
       price: req.body.price
     }
 
-    Product.findByIdAndUpdate(req.params.id, updatedProduct, {new: true})
-    .then(result => {
-       if(!result)
+    Product.findByIdAndUpdate(req.params.id, product, {new: true})
+    .then(updatedProduct => {
+       if(!updatedProduct)
        return res.status(400).json("Product not found");
 
-       res.json(result);
+       res.json(updatedProduct);
     })
     .catch(err => res.status(400).json(err.message));
 }
@@ -95,6 +106,29 @@ const activateProduct = (req, res) => {
      .catch(err => res.status(400).json(err.message));
 }
 
+// Count All Products
+const countAllProducts = (req, res) => {
+     Product.countDocuments()
+     .then(productCount => {
+          if(!productCount)
+          return res.sendStatus(500);
+
+          res.json(productCount);
+     })
+     .catch(() => res.sendStatus(500));
+}
+
+// Count Active Products
+const countActiveProducts = (req, res) => {
+     Product.countDocuments({isActive: true})
+     .then(result => {
+          if(!result)
+          return res.sendStatus(500);
+
+          res.json(result);
+     })
+     .catch(() => res.sendStatus(500));
+}
 
 module.exports = {
      getProducts,
@@ -104,5 +138,9 @@ module.exports = {
      deleteProduct,
      updateProduct,
      archiveProduct,
-     activateProduct
+     activateProduct,
+     countAllProducts,
+     countActiveProducts
 }
+
+

@@ -8,7 +8,9 @@ const {
      deleteProduct,
      updateProduct,
      archiveProduct,
-     activateProduct
+     activateProduct,
+     countAllProducts,
+     countActiveProducts
 
 } = productController;
 
@@ -36,5 +38,10 @@ router.patch('/:id/archive', archiveProduct);
 // Activate Product (isActive -> true)
 router.patch('/:id/activate', activateProduct);
 
+// Count All Products
+router.get('/get/count', countAllProducts);
+
+// Count All Active Products
+router.get('/get/count/active', countActiveProducts);
 
 module.exports = router;

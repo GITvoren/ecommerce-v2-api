@@ -45,15 +45,15 @@ const getCategory = (req, res) => {
 
 const updateCategory = (req, res) => {
 
-     const updatedCategory = {
+     const category = {
           name: req.body.name,
           icon: req.body.icon,
           color: req.body.color
      }
 
-     Category.findByIdAndUpdate(req.params.id, updatedCategory, {new: true})
-     .then(result => {
-          if(!result)
+     Category.findByIdAndUpdate(req.params.id, category, {new: true})
+     .then(updatedCategory => {
+          if(!updatedCategory)
           return res.status(400).json("Category not found");
 
           res.json(updatedCategory);
