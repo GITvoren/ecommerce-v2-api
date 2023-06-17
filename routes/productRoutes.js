@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const productController = require('../controllers/productController.js');
+const auth = require('../auth.js');
 const {
      getProducts,
      getActiveProducts,
@@ -14,8 +15,15 @@ const {
 
 } = productController;
 
+const {
+     userAuth,
+     adminAuth,
+     nonAdminAuth
+
+} = auth;
+
 // Get All Products
-router.get('/', getProducts);
+router.get('/', userAuth, adminAuth, getProducts);
 
 // Get All Active Products
 router.get('/active', getActiveProducts);
