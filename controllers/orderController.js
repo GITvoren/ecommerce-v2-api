@@ -10,12 +10,12 @@ const getOrders = (req, res) => {
                     path: 'orderItems',
                     populate: {
                          path: 'product',
-                         select: '_id name price'
+                         select: 'name price'
                     }
                },
                {
                     path: 'orderedBy',
-                    select: '_id email'
+                    select: 'email'
                }
           ]
      )
