@@ -6,7 +6,6 @@ const {
      getActiveProducts,
      getProduct,
      addProduct,
-     deleteProduct,
      updateProduct,
      archiveProduct,
      activateProduct,
@@ -17,8 +16,7 @@ const {
 
 const {
      userAuth,
-     adminAuth,
-     nonAdminAuth
+     adminAuth
 
 } = auth;
 
@@ -31,25 +29,22 @@ router.get('/active', getActiveProducts);
 // Get Single Product
 router.get('/:id', getProduct);
 
-// Add Product
-router.post('/', addProduct);
+// Add Product [Admin Users Only]
+router.post('/', userAuth, adminAuth, addProduct);
 
-// Delete Product
-router.delete('/:id', deleteProduct);
+// Update Product [Admin Users Only]
+router.put('/:id', userAuth, adminAuth, updateProduct);
 
-// Update Product
-router.put('/:id', updateProduct);
+// Archive Product (isActive -> false) [Admin Users Only]
+router.patch('/:id/archive', userAuth, adminAuth, archiveProduct);
 
-// Archive Product (isActive -> false)
-router.patch('/:id/archive', archiveProduct);
+// Activate Product (isActive -> true) [Admin Users Only]
+router.patch('/:id/activate', userAuth, adminAuth, activateProduct);
 
-// Activate Product (isActive -> true)
-router.patch('/:id/activate', activateProduct);
+// Count All Products [Admin Users Only]
+router.get('/get/count', userAuth, adminAuth, countAllProducts);
 
-// Count All Products
-router.get('/get/count', countAllProducts);
-
-// Count All Active Products
-router.get('/get/count/active', countActiveProducts);
+// Count All Active Products [Admin Users Only]
+router.get('/get/count/active', userAuth, adminAuth, countActiveProducts);
 
 module.exports = router;

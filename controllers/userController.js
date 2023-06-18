@@ -4,12 +4,14 @@ const jwt = require('jsonwebtoken');
 
 
 
-const getUsers = (req, res) => {
-     User.find({})
-     .then(users => res.json(users))
-     .catch(() => res.sendStatus(500));
+// Get Logged User's Details  thru Token
+const getUserDetails = (req, res) => {
+     User.findById(req.user._id)
+     .then(user => res.json(user))
+     .catch(() => res.sendStatus(403));
 }
 
+// Register User
 const registerUser = (req, res) => {
 
      User.findOne({email: req.body.email})
@@ -38,6 +40,7 @@ const registerUser = (req, res) => {
      
 }
 
+// Login User
 const loginUser = (req, res) => {
      User.findOne({email: req.body.email})
      .then(user => {
@@ -63,8 +66,9 @@ const loginUser = (req, res) => {
      .catch(() => res.sendStatus(500));
 }
 
+// Set user as Admin [Admin Only]
 const setAdmin = (req, res) => {
-     User.findById(req.params.id)
+     User.findOne({email: req.body.email})
      .then(user => {
           if(!user) return res.status(400).json('user not found')
           user.isAdmin = true;
@@ -75,11 +79,26 @@ const setAdmin = (req, res) => {
      .catch(() => res.sendStatus(500));
 }
 
+// Count All Users [Admin Only]
+const countAllUsers = (req, res) => {
+     User.countDocuments()
+     .then(userCount => res.json(userCount))
+     .catch(() => res.sendStatus(500));
+}
+
+// Count Admin Users [Admin Only]
+const countAdminUsers = (req, res) => {
+     User.countDocuments({isAdmin: true})
+     .then(userCount => res.json(userCount))
+     .catch(() => res.sendStatus(500));
+}
 
 module.exports = {
-     getUsers,
+     getUserDetails,
      registerUser,
      loginUser,
-     setAdmin
+     setAdmin,
+     countAllUsers,
+     countAdminUsers
 
 }

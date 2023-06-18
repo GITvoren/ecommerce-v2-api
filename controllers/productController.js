@@ -37,7 +37,7 @@ const getProduct = (req, res) => {
      .catch(err => res.status(400).json(err.message));
 }
 
-// Add Product
+// Add Product [Admin Users Only]
 const addProduct = (req, res) => {
      const product = new Product({
           name: req.body.name,
@@ -50,20 +50,7 @@ const addProduct = (req, res) => {
      .catch(err => res.status(400).json(err.message));
 }
 
-// Delete Product
-const deleteProduct = (req, res) => {
-     Product.findById(req.params.id)
-     .then(product => {
-          if(!product)
-          return res.status(400).json("Product not found");
-
-          product.deleteOne();
-          res.json("Successfully Deleted Product");
-     })
-     .catch(err => res.status(400).json(err.message));
-}
-
-// Update Product
+// Update Product [Admin Users Only]
 const updateProduct = (req, res) => {
 
     const product = {
@@ -82,7 +69,7 @@ const updateProduct = (req, res) => {
     .catch(err => res.status(400).json(err.message));
 }
 
-// Archive Product (isActive -> false)
+// Archive Product (isActive -> false) [Admin Users Only]
 const archiveProduct = (req, res) => {
      Product.findById(req.params.id)
      .then(product => {
@@ -94,7 +81,7 @@ const archiveProduct = (req, res) => {
      .catch(err => res.status(400).json(err.message));
 }
 
-// Activate Product (isActive -> true)
+// Activate Product (isActive -> true) [Admin Users Only]
 const activateProduct = (req, res) => {
      Product.findById(req.params.id)
      .then(product => {
@@ -106,7 +93,7 @@ const activateProduct = (req, res) => {
      .catch(err => res.status(400).json(err.message));
 }
 
-// Count All Products
+// Count All Products [Admin Users Only]
 const countAllProducts = (req, res) => {
      Product.countDocuments()
      .then(productCount => {
@@ -118,7 +105,7 @@ const countAllProducts = (req, res) => {
      .catch(() => res.sendStatus(500));
 }
 
-// Count Active Products
+// Count Active Products [Admin Users Only]
 const countActiveProducts = (req, res) => {
      Product.countDocuments({isActive: true})
      .then(result => {
@@ -135,7 +122,6 @@ module.exports = {
      getActiveProducts,
      getProduct,
      addProduct,
-     deleteProduct,
      updateProduct,
      archiveProduct,
      activateProduct,

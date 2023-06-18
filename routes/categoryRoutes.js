@@ -9,15 +9,21 @@ const {
 
 } = categoryController;
 
-router.get('/', getCategories);
+const {
+     userAuth,
+     adminAuth
+     
+} = require('../auth.js')
 
-router.post('/', addCategory);
+router.get('/', userAuth, adminAuth, getCategories);
 
-router.get('/:id', getCategory);
+router.post('/', userAuth, adminAuth, addCategory);
 
-router.put('/:id', updateCategory);
+router.get('/:id', userAuth, adminAuth, getCategory);
 
-router.delete('/:id', deleteCategory);
+router.put('/:id', userAuth, adminAuth, updateCategory);
+
+router.delete('/:id', userAuth, adminAuth, deleteCategory);
 
 
 module.exports = router;
