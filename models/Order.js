@@ -14,10 +14,10 @@ const orderSchema = new mongoose.Schema({
           type: Number,
           required: true
      },
-/*      orderedBy: {
+     orderedBy: {
           type: mongoose.Schema.Types.ObjectId,
           ref: 'User'
-     }, */
+     },
      dateOrdered: {
           type: Date,
           default: Date.now
