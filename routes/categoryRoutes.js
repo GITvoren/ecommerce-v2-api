@@ -15,7 +15,7 @@ const {
      
 } = require('../auth.js')
 
-router.get('/', userAuth, adminAuth, getCategories);
+router.get('/', getCategories);
 
 router.post('/', userAuth, adminAuth, addCategory);
 

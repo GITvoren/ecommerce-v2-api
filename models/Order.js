@@ -18,6 +18,14 @@ const orderSchema = new mongoose.Schema({
           type: mongoose.Schema.Types.ObjectId,
           ref: 'User'
      },
+     shipmentAddress: {
+          type: String,
+          required: true
+     },
+     paymentMethod: {
+          type: String,
+          required: true
+     },
      dateOrdered: {
           type: Date,
           default: Date.now

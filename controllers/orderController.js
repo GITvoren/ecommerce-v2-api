@@ -30,7 +30,7 @@ const createOrder = async (req, res) => {
           const orderItemsIds = Promise.all(req.body.orderItems.map(async orderItem => {
                let newOrderItem = new OrderItem({
                     quantity: orderItem.quantity,
-                    product: orderItem.product
+                    product: orderItem._id
                })
      
                newOrderItem = await newOrderItem.save();
@@ -54,7 +54,9 @@ const createOrder = async (req, res) => {
           let newOrder = new Order({
                orderItems: orderItemsIdsResolved,
                totalAmount: req.body.totalAmount,
-               orderedBy: req.body.orderedBy
+               orderedBy: req.body.orderedBy,
+               shipmentAddress: req.body.shipmentAddress,
+               paymentMethod: req.body.paymentMethod
           })
      
           newOrder = await newOrder.save();
@@ -67,9 +69,6 @@ const createOrder = async (req, res) => {
      
      
 }
-
-
-
 
 
 module.exports = {
