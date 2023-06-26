@@ -9,11 +9,15 @@ This API is RESTful and was built mainly using NodeJS, ExpressJS, and Mongoose. 
 - Add product (admin only)
 - Retrieve all products
 - Retrieve all 'active' products
-- Retrieve single product
+- Retrieve single product details
 - Update product (admin only)
 - Archive product (admin only)
 - Activate product (admin only)
-- User checkout (non-admin authenticated only)
+- Set user as Admin
+- View All Orders
+- Checkout Order
+- Categories
+- Get Users and Products Count
 - Retrieve user details (auth users)
 
 
