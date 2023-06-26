@@ -45,12 +45,12 @@ const loginUser = (req, res) => {
      User.findOne({email: req.body.email})
      .then(user => {
           if(!user)
-          return res.status(400).json("User not found")
+          return res.status(400).json("Incorrect Email or Password")
 
           bcrypt.compare(req.body.password, user.password)
           .then(isPasswordCorrect => {
                if(!isPasswordCorrect)
-               return res.status(400).json("Invalid password");
+               return res.status(400).json("Incorrect Email or Password");
 
                const dataPayload = {
                     _id: user._id,
