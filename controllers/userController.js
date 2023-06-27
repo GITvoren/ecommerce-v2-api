@@ -68,15 +68,34 @@ const loginUser = (req, res) => {
 
 // Set user as Admin [Admin Only]
 const setAdmin = (req, res) => {
-     User.findOne({email: req.body.email})
-     .then(user => {
-          if(!user) return res.status(400).json('user not found')
-          user.isAdmin = true;
-          user.save()
-          .then(updatedUser => res.json('User has been set as Admin'))
-          .catch(() => res.sendStatus(500));
+     User.findOne({email: req.body.adminEmail})
+     .then(auth => {
+          if(!auth.isAdmin)
+          return res.status(400).json("You are not an Admin!")
+          
+          if(!auth)
+          return res.status(400).json("Invalid Admin Credentials")
+
+          bcrypt.compare(req.body.password, auth.password)
+          .then(isPasswordCorrect => {
+               if(!isPasswordCorrect)
+               return res.status(400).json("Invalid Admin Credentials");
+
+               User.findOne({email: req.body.email})
+               .then(user => {
+                    if(!user) return res.status(400).json('user not found')
+                    user.isAdmin = true;
+                    user.save()
+                    .then(updatedUser => res.json('User has been set as Admin'))
+                    .catch(() => res.sendStatus(500));
+               })
+               .catch(() => res.sendStatus(500));
+
+
+          })
      })
      .catch(() => res.sendStatus(500));
+    
 }
 
 // Count All Users [Admin Only]
