@@ -70,9 +70,7 @@ const loginUser = (req, res) => {
 const setAdmin = (req, res) => {
      User.findOne({email: req.body.adminEmail})
      .then(auth => {
-          if(!auth.isAdmin)
-          return res.status(400).json("You are not an Admin!")
-          
+
           if(!auth)
           return res.status(400).json("Invalid Admin Credentials")
 
@@ -80,6 +78,9 @@ const setAdmin = (req, res) => {
           .then(isPasswordCorrect => {
                if(!isPasswordCorrect)
                return res.status(400).json("Invalid Admin Credentials");
+
+	       if(!auth.isAdmin)
+               return res.status(400).json("You are not an Admin!");
 
                User.findOne({email: req.body.email})
                .then(user => {
