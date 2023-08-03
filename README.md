@@ -1,6 +1,6 @@
 ## Ecommerce API
 
-This API is RESTful and was built mainly using NodeJS, ExpressJS, and Mongoose. I connected it to the noSQL Database, MongoDB. Hosted on [Cyclic](https://www.cyclic.sh/)
+This API is RESTful and was built mainly using NodeJS, ExpressJS, and Mongoose. I connected it to the noSQL Database, MongoDB. Hosted on [Render](https://render.com/)
 
 ## Functionalities
 - Check duplicate email
